@@ -23,11 +23,13 @@ app.get("/badge.svg", async (req, res) => {
       url: repo.html_url
     }));
 
+    const svgHeight = 60 + projects.length * 100;
+
     res.setHeader("Content-Type", "image/svg+xml");
-    res.setHeader("Access-Control-Allow-Origin", "*"); // CORS, bo GitHub się boi
+    res.setHeader("Access-Control-Allow-Origin", "*");
 
     res.send(`
-      <svg width="500" height="180" xmlns="http://www.w3.org/2000/svg">
+      <svg width="500" height="${svgHeight}" xmlns="http://www.w3.org/2000/svg">
         <style>
           .text { fill: #ffffff; font-family: monospace; font-size: 16px; }
           .title { fill: #ffffff; font-family: monospace; font-size: 20px; font-weight: bold; }
@@ -39,11 +41,14 @@ app.get("/badge.svg", async (req, res) => {
         
         <text x="20" y="30" class="title">Ostatnie projekty @${GITHUB_USERNAME}</text>
         
-        ${projects.map((project, i) => `
-          <text x="20" y="${60 + i * 40}" class="project">${project.name}</text>
-          <text x="20" y="${100 + i * 40}" class="description">${project.description}</text>
-          <text x="20" y="${125 + i * 40}" class="stars">⭐ ${project.stars} gwiazdek</text>
-        `).join('')}
+        ${projects.map((project, i) => {
+          const baseY = 60 + i * 100;
+          return `
+            <text x="20" y="${baseY}" class="project">${project.name}</text>
+            <text x="20" y="${baseY + 20}" class="description">${project.description}</text>
+            <text x="20" y="${baseY + 40}" class="stars">⭐ ${project.stars} gwiazdek</text>
+          `;
+        }).join('')}
       </svg>
     `);
   } catch (error) {
