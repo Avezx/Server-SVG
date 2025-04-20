@@ -23,9 +23,9 @@ app.get("/badge.svg", async (req, res) => {
       url: repo.html_url
     }));
 
-    const svgWidth = 800;  // Zwiększona szerokość
-    const projectWidth = svgWidth / 3;  // Zwiększona szerokość dla 3 projektów
-    const svgHeight = 80 + (projects.length * 35);  // Zwiększona wysokość dla większej przestrzeni
+    const svgWidth = 800;
+    const projectWidth = svgWidth / 3;
+    const svgHeight = 80 + (projects.length * 30);
 
     res.setHeader("Content-Type", "image/svg+xml");
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -51,7 +51,6 @@ app.get("/badge.svg", async (req, res) => {
             </g>
           `;
         }).join('')}
-        
       </svg>
     `);
   } catch (error) {
@@ -60,11 +59,12 @@ app.get("/badge.svg", async (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
 
     res.send(`
-      <svg width="800" height="100" viewBox="0 0 800 100" fill="red" xmlns="http://www.w3.org/2000/svg">
+      <svg width="800" height="100" viewBox="0 0 800 100" xmlns="http://www.w3.org/2000/svg">
         <style>
+          rect { fill: #0d1117 !important; }
           .text { fill: #ffffff; font-family: monospace; font-size: 16px; }
         </style>
-        <rect width="100%" height="100%" fill="red" rx="10" ry="10"/>
+        <rect width="100%" height="100%" rx="10" ry="10"/>
         <text x="20" y="40" class="text">⚠️ Błąd podczas ładowania projektów</text>
       </svg>
     `);
