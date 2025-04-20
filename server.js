@@ -60,7 +60,7 @@ app.get("/badge.svg", async (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
 
     res.send(`
-      <svg width="800" height="100" viewBox="0 0 800 100" xmlns="http://www.w3.org/2000/svg">
+      <svg width="800" height="100" viewBox="0 0 800 100" fill="red" xmlns="http://www.w3.org/2000/svg">
         <style>
           .text { fill: #ffffff; font-family: monospace; font-size: 16px; }
         </style>
