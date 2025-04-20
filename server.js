@@ -29,7 +29,7 @@ app.get("/badge.svg", async (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
 
     res.send(`
-      <svg width="500" height="${svgHeight}" xmlns="http://www.w3.org/2000/svg">
+      <svg width="500" height="${svgHeight}" viewBox="0 0 500 ${svgHeight}" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg">
         <style>
           .text { fill: #ffffff; font-family: monospace; font-size: 16px; }
           .title { fill: #ffffff; font-family: monospace; font-size: 20px; font-weight: bold; }
@@ -57,7 +57,7 @@ app.get("/badge.svg", async (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
 
     res.send(`
-      <svg width="500" height="100" xmlns="http://www.w3.org/2000/svg">
+      <svg width="500" height="100" viewBox="0 0 500 100" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg">
         <style>
           .text { fill: #ffffff; font-family: monospace; font-size: 16px; }
         </style>
