@@ -24,10 +24,8 @@ app.get("/badge.svg", async (req, res) => {
     }));
 
     const svgWidth = 500;
-    const projectWidth = svgWidth / 3;  // Zmniejszenie liczby projektów na szerokość
-    const svgHeight = 120 + Math.max(0, projects.length * 80); // Dynamika wysokości
-
-    const timestamp = new Date().getTime();
+    const projectWidth = svgWidth / 3;  // Zmniejszona szerokość dla 3 projektów
+    const svgHeight = 40 + (projects.length * 60);  // Zmniejszenie wysokości do minimalnej
 
     res.setHeader("Content-Type", "image/svg+xml");
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -47,9 +45,9 @@ app.get("/badge.svg", async (req, res) => {
           const xPos = i * projectWidth;
           return `
             <g transform="translate(${xPos}, 0)">
-              <text x="20" y="40" class="project">${project.name}</text>
-              <text x="20" y="60" class="description">${project.description}</text>
-              <text x="20" y="80" class="stars">⭐ ${project.stars} gwiazdek</text>
+              <text x="20" y="30" class="project">${project.name}</text>
+              <text x="20" y="50" class="description">${project.description}</text>
+              <text x="20" y="70" class="stars">⭐ ${project.stars} gwiazdek</text>
             </g>
           `;
         }).join('')}
