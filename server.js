@@ -25,7 +25,7 @@ app.get("/badge.svg", async (req, res) => {
 
     const svgWidth = 500;
     const projectWidth = svgWidth / 3;  // Zmniejszona szerokość dla 3 projektów
-    const svgHeight = 40 + (projects.length * 60);  // Zmniejszenie wysokości do minimalnej
+    const svgHeight = 40 + (projects.length * 30);  // Zmniejszenie wysokości do minimalnej
 
     res.setHeader("Content-Type", "image/svg+xml");
     res.setHeader("Access-Control-Allow-Origin", "*");
