@@ -24,10 +24,9 @@ app.get("/badge.svg", async (req, res) => {
     }));
 
     const svgWidth = 500;
-    const projectWidth = svgWidth / 3;  // 3 projekty obok siebie
-    const svgHeight = 100 + Math.max(100, projects.length * 120);  // trochę wyższe, żeby się nie dusiły
+    const projectWidth = svgWidth / 4;  // 
+    const svgHeight = 100 + Math.max(100, projects.length * 120);  
 
-    // Generowanie unikalnego parametru w URL na podstawie aktualnego czasu
     const timestamp = new Date().getTime();
 
     res.setHeader("Content-Type", "image/svg+xml");
@@ -44,7 +43,7 @@ app.get("/badge.svg", async (req, res) => {
         </style>
         <rect width="100%" height="100%" fill="#0d1117" rx="10" ry="10"/>
         
-        <text x="20" y="30" class="title">Ostatnie projekty @${GITHUB_USERNAME}</text>
+
 
         ${projects.map((project, i) => {
           const xPos = i * projectWidth;
@@ -57,8 +56,7 @@ app.get("/badge.svg", async (req, res) => {
           `;
         }).join('')}
         
-        <!-- Dodanie unikalnego parametru do URL do załadowania pliku -->
-        <text x="20" y="${svgHeight - 30}" class="text">Wersja: ${timestamp}</text>
+
       </svg>
     `);
   } catch (error) {
