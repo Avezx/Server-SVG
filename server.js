@@ -4,7 +4,7 @@ const app = express();
 
 const GITHUB_USERNAME = "avezx"; // Twój username na GitHub
 const GITHUB_API_URL = `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=3`;
-const GITHUB_TOKEN = "TWÓJ_TOKEN_TUTAJ"; // Twój token autoryzacyjny
+const GITHUB_TOKEN = "TWOJ_TOKEN_TUTAJ"; // Twój token autoryzacyjny
 
 app.get("/", async (req, res) => {
   try {
