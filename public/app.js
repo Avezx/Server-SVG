@@ -1,28 +1,19 @@
-const repos = [
-  { owner: "Avezx", repo: "Project1" },
-  { owner: "Avezx", repo: "Project2" },
-  { owner: "Avezx", repo: "Project3" }
-];
-
-async function fetchCommitData(owner, repo, projectId) {
+async function fetchLatestRepos() {
   try {
-    const response = await fetch(\`/commits?owner=\${owner}&repo=\${repo}\`);
-    const data = await response.json();
-    const commitMessage = data.message;
-    const commitDate = data.date;
-    const commitAuthor = data.author;
+    const response = await fetch('https://api.github.com/users/Avezx/repos?sort=created&direction=desc&per_page=3');
+    const repos = await response.json();
 
-    const commitElement = document.getElementById(\`commit\${projectId}\`);
-    commitElement.textContent = \`\${commitMessage} (\${commitDate}) przez \${commitAuthor}\`;
-
-    const progressElement = document.getElementById(\`progress\${projectId}\`);
-    progressElement.textContent = '75%';
-
-    const descriptionElement = document.getElementById(\`description\${projectId}\`);
-    descriptionElement.textContent = \`Opis projektu: \${repo}\`;
+    repos.forEach((repo, index) => {
+      const projectElement = document.getElementById(`project${index + 1}`);
+      if (projectElement) {
+        projectElement.querySelector('.repo-name').textContent = repo.name;
+        projectElement.querySelector('.repo-description').textContent = repo.description || 'Brak opisu';
+        projectElement.querySelector('.repo-updated').textContent = `Ostatnia aktualizacja: ${new Date(repo.updated_at).toLocaleDateString()}`;
+      }
+    });
   } catch (error) {
-    console.error("Błąd podczas pobierania danych:", error);
+    console.error('Błąd podczas pobierania danych z GitHub:', error);
   }
 }
 
-repos.forEach((repo, index) => fetchCommitData(repo.owner, repo.repo, index + 1));
+fetchLatestRepos();
