@@ -23,13 +23,15 @@ app.get("/badge.svg", async (req, res) => {
       url: repo.html_url
     }));
 
-    const svgHeight = 60 + projects.length * 100;
+    const svgWidth = 500;
+    const projectWidth = svgWidth / 3;  // 3 projekty obok siebie
+    const svgHeight = 100 + Math.max(100, projects.length * 120);  // trochę wyższe, żeby się nie dusiły
 
     res.setHeader("Content-Type", "image/svg+xml");
     res.setHeader("Access-Control-Allow-Origin", "*");
 
     res.send(`
-      <svg width="500" height="${svgHeight}" viewBox="0 0 500 ${svgHeight}" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg">
         <style>
           .text { fill: #ffffff; font-family: monospace; font-size: 16px; }
           .title { fill: #ffffff; font-family: monospace; font-size: 20px; font-weight: bold; }
@@ -40,13 +42,15 @@ app.get("/badge.svg", async (req, res) => {
         <rect width="100%" height="100%" fill="#0d1117" rx="10" ry="10"/>
         
         <text x="20" y="30" class="title">Ostatnie projekty @${GITHUB_USERNAME}</text>
-        
+
         ${projects.map((project, i) => {
-          const baseY = 60 + i * 100;
+          const xPos = i * projectWidth;
           return `
-            <text x="20" y="${baseY}" class="project">${project.name}</text>
-            <text x="20" y="${baseY + 20}" class="description">${project.description}</text>
-            <text x="20" y="${baseY + 40}" class="stars">⭐ ${project.stars} gwiazdek</text>
+            <g transform="translate(${xPos}, 0)">
+              <text x="20" y="60" class="project">${project.name}</text>
+              <text x="20" y="80" class="description">${project.description}</text>
+              <text x="20" y="100" class="stars">⭐ ${project.stars} gwiazdek</text>
+            </g>
           `;
         }).join('')}
       </svg>
