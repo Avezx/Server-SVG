@@ -25,13 +25,13 @@ app.get("/badge.svg", async (req, res) => {
 
     const svgWidth = 800;  // Zwiększona szerokość
     const projectWidth = svgWidth / 3;  // Zwiększona szerokość dla 3 projektów
-    const svgHeight = 80 + (projects.length * 60);  // Zwiększona wysokość dla większej przestrzeni
+    const svgHeight = 80 + (projects.length * 50);  // Zwiększona wysokość dla większej przestrzeni
 
     res.setHeader("Content-Type", "image/svg+xml");
     res.setHeader("Access-Control-Allow-Origin", "*");
 
     res.send(`
-      <svg width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}" xmlns="http://www.w3.org/2000/svg">
         <style>
           .text { fill: #ffffff; font-family: monospace; font-size: 16px; }
           .title { fill: #ffffff; font-family: monospace; font-size: 22px; font-weight: bold; }
@@ -60,7 +60,7 @@ app.get("/badge.svg", async (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
 
     res.send(`
-      <svg width="800" height="100" viewBox="0 0 800 100" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="800" height="100" viewBox="0 0 800 100" xmlns="http://www.w3.org/2000/svg">
         <style>
           .text { fill: #ffffff; font-family: monospace; font-size: 16px; }
         </style>
