@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 
-const START_DATE = new Date("2024-12-01");
+const START_DATE = new Date("2019-04-15");
 
 app.get("/", (req, res) => {
   const days = Math.floor((new Date() - START_DATE) / (1000 * 60 * 60 * 24));
@@ -17,8 +17,7 @@ app.get("/", (req, res) => {
       </style>
       <rect width="100%" height="100%" fill="#0d1117" rx="10" ry="10"/>
       <text x="20" y="40" class="text">🕒 Dni bez aktywności: ${days}</text>
-      <text x="20" y="70" class="text">🐞 Błędy wykryte (est.): ${bugs}</text>
-      <text x="20" y="100" class="text">😳 Poziom wstydu: ${shame}%</text>
+      <text x="20" y="70" class="text">🐞 Błędy w kodzie: ${bugs}</text>
     </svg>
   `);
 });
