@@ -25,7 +25,7 @@ app.get("/badge.svg", async (req, res) => {
 
     const svgWidth = 800;  // Zwiększona szerokość
     const projectWidth = svgWidth / 3;  // Zwiększona szerokość dla 3 projektów
-    const svgHeight = 80 + (projects.length * 50);  // Zwiększona wysokość dla większej przestrzeni
+    const svgHeight = 80 + (projects.length * 35);  // Zwiększona wysokość dla większej przestrzeni
 
     res.setHeader("Content-Type", "image/svg+xml");
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -64,7 +64,7 @@ app.get("/badge.svg", async (req, res) => {
         <style>
           .text { fill: #ffffff; font-family: monospace; font-size: 16px; }
         </style>
-        <rect width="100%" height="100%" fill="#0d1117" rx="10" ry="10"/>
+        <rect width="100%" height="100%" fill="red" rx="10" ry="10"/>
         <text x="20" y="40" class="text">⚠️ Błąd podczas ładowania projektów</text>
       </svg>
     `);
