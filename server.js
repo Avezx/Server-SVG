@@ -27,6 +27,9 @@ app.get("/badge.svg", async (req, res) => {
     const projectWidth = svgWidth / 3;  // 3 projekty obok siebie
     const svgHeight = 100 + Math.max(100, projects.length * 120);  // trochę wyższe, żeby się nie dusiły
 
+    // Generowanie unikalnego parametru w URL na podstawie aktualnego czasu
+    const timestamp = new Date().getTime();
+
     res.setHeader("Content-Type", "image/svg+xml");
     res.setHeader("Access-Control-Allow-Origin", "*");
 
@@ -53,6 +56,9 @@ app.get("/badge.svg", async (req, res) => {
             </g>
           `;
         }).join('')}
+        
+        <!-- Dodanie unikalnego parametru do URL do załadowania pliku -->
+        <text x="20" y="${svgHeight - 30}" class="text">Wersja: ${timestamp}</text>
       </svg>
     `);
   } catch (error) {
