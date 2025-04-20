@@ -1,16 +1,13 @@
 const express = require('express');
 const path = require('path');
+const fetch = require('node-fetch');
 
 const app = express();
 
-// Serwowanie plików statycznych z folderu 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Endpoint do zwracania commity
 app.get('/commits', async (req, res) => {
-  const fetch = require('node-fetch');
-  const owner = "Avezx";
-  const repo = "Project1"; // Możesz tu dodać logikę na dynamiczne repozytoria
+  const { owner, repo } = req.query;
 
   try {
     const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits`);
