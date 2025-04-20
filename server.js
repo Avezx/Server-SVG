@@ -4,13 +4,13 @@ const app = express();
 
 const GITHUB_USERNAME = "avezx"; // Twój username na GitHub
 const GITHUB_API_URL = `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=3`;
-const GITHUB_TOKEN = "TWOJ_TOKEN_TUTAJ"; // Twój token autoryzacyjny
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN; // Odczytujemy token z zmiennej środowiskowej
 
 app.get("/", async (req, res) => {
   try {
     const response = await axios.get(GITHUB_API_URL, {
       headers: {
-        Authorization: `token ${GITHUB_TOKEN}`, // Dodajemy nagłówek z tokenem
+        Authorization: `token ${GITHUB_TOKEN}`, // Używamy tokena z zmiennej środowiskowej
       },
     });
     const repos = response.data.slice(0, 3); // Bierzemy 3 najnowsze repozytoria
