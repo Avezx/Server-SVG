@@ -24,8 +24,8 @@ app.get("/badge.svg", async (req, res) => {
     }));
 
     const svgWidth = 500;
-    const projectWidth = svgWidth / 4;  // 
-    const svgHeight = 100 + Math.max(100, projects.length * 120);  
+    const projectWidth = svgWidth / 3;  // Zmniejszenie liczby projektów na szerokość
+    const svgHeight = 120 + Math.max(0, projects.length * 80); // Dynamika wysokości
 
     const timestamp = new Date().getTime();
 
@@ -35,28 +35,25 @@ app.get("/badge.svg", async (req, res) => {
     res.send(`
       <svg width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg">
         <style>
-          .text { fill: #ffffff; font-family: monospace; font-size: 16px; }
-          .title { fill: #ffffff; font-family: monospace; font-size: 20px; font-weight: bold; }
+          .text { fill: #ffffff; font-family: monospace; font-size: 14px; }
+          .title { fill: #ffffff; font-family: monospace; font-size: 18px; font-weight: bold; }
           .project { fill: #58a6ff; font-family: monospace; font-size: 16px; }
-          .description { fill: #8b949e; font-family: monospace; font-size: 14px; }
-          .stars { fill: #f1e05a; font-family: monospace; font-size: 14px; }
+          .description { fill: #8b949e; font-family: monospace; font-size: 12px; }
+          .stars { fill: #f1e05a; font-family: monospace; font-size: 12px; }
         </style>
         <rect width="100%" height="100%" fill="#0d1117" rx="10" ry="10"/>
         
-
-
         ${projects.map((project, i) => {
           const xPos = i * projectWidth;
           return `
             <g transform="translate(${xPos}, 0)">
-              <text x="20" y="60" class="project">${project.name}</text>
-              <text x="20" y="80" class="description">${project.description}</text>
-              <text x="20" y="100" class="stars">⭐ ${project.stars} gwiazdek</text>
+              <text x="20" y="40" class="project">${project.name}</text>
+              <text x="20" y="60" class="description">${project.description}</text>
+              <text x="20" y="80" class="stars">⭐ ${project.stars} gwiazdek</text>
             </g>
           `;
         }).join('')}
         
-
       </svg>
     `);
   } catch (error) {
