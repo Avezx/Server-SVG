@@ -23,9 +23,9 @@ app.get("/badge.svg", async (req, res) => {
       url: repo.html_url
     }));
 
-    const svgWidth = 500;
-    const projectWidth = svgWidth / 3;  // Zmniejszona szerokość dla 3 projektów
-    const svgHeight = 40 + (projects.length * 30);  // Zmniejszenie wysokości do minimalnej
+    const svgWidth = 800;  // Zwiększona szerokość
+    const projectWidth = svgWidth / 3;  // Zwiększona szerokość dla 3 projektów
+    const svgHeight = 80 + (projects.length * 60);  // Zwiększona wysokość dla większej przestrzeni
 
     res.setHeader("Content-Type", "image/svg+xml");
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -33,11 +33,11 @@ app.get("/badge.svg", async (req, res) => {
     res.send(`
       <svg width="${svgWidth}" height="${svgHeight}" viewBox="0 0 ${svgWidth} ${svgHeight}" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg">
         <style>
-          .text { fill: #ffffff; font-family: monospace; font-size: 14px; }
-          .title { fill: #ffffff; font-family: monospace; font-size: 18px; font-weight: bold; }
-          .project { fill: #58a6ff; font-family: monospace; font-size: 16px; }
-          .description { fill: #8b949e; font-family: monospace; font-size: 12px; }
-          .stars { fill: #f1e05a; font-family: monospace; font-size: 12px; }
+          .text { fill: #ffffff; font-family: monospace; font-size: 16px; }
+          .title { fill: #ffffff; font-family: monospace; font-size: 22px; font-weight: bold; }
+          .project { fill: #58a6ff; font-family: monospace; font-size: 18px; font-weight: bold; }
+          .description { fill: #8b949e; font-family: monospace; font-size: 14px; }
+          .stars { fill: #f1e05a; font-family: monospace; font-size: 14px; }
         </style>
         <rect width="100%" height="100%" fill="#0d1117" rx="10" ry="10"/>
         
@@ -45,9 +45,9 @@ app.get("/badge.svg", async (req, res) => {
           const xPos = i * projectWidth;
           return `
             <g transform="translate(${xPos}, 0)">
-              <text x="20" y="30" class="project">${project.name}</text>
-              <text x="20" y="50" class="description">${project.description}</text>
-              <text x="20" y="70" class="stars">⭐ ${project.stars} gwiazdek</text>
+              <text x="20" y="40" class="project">${project.name}</text>
+              <text x="20" y="70" class="description">${project.description}</text>
+              <text x="20" y="100" class="stars">⭐ ${project.stars} gwiazdek</text>
             </g>
           `;
         }).join('')}
@@ -60,7 +60,7 @@ app.get("/badge.svg", async (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
 
     res.send(`
-      <svg width="500" height="100" viewBox="0 0 500 100" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg">
+      <svg width="800" height="100" viewBox="0 0 800 100" preserveAspectRatio="xMinYMin meet" xmlns="http://www.w3.org/2000/svg">
         <style>
           .text { fill: #ffffff; font-family: monospace; font-size: 16px; }
         </style>
