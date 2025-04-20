@@ -40,9 +40,9 @@ app.get("/badge.svg", async (req, res) => {
         <text x="20" y="30" class="title">Ostatnie projekty @${GITHUB_USERNAME}</text>
         
         ${projects.map((project, i) => `
-          <text x="20" y="${60 + i * 40}" class="project">${project.name}</text>
-          <text x="20" y="${80 + i * 40}" class="description">${project.description}</text>
-          <text x="20" y="${95 + i * 40}" class="stars">⭐ ${project.stars} gwiazdek</text>
+          <text x="20" y="${70 + i * 40}" class="project">${project.name}</text>
+          <text x="20" y="${90 + i * 40}" class="description">${project.description}</text>
+          <text x="20" y="${105 + i * 40}" class="stars">⭐ ${project.stars} gwiazdek</text>
         `).join('')}
       </svg>
     `);
