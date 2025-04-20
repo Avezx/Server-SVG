@@ -39,7 +39,7 @@ app.get("/badge.svg", async (req, res) => {
           .description { fill: #8b949e; font-family: monospace; font-size: 14px; }
           .stars { fill: #f1e05a; font-family: monospace; font-size: 14px; }
         </style>
-        <rect width="100%" height="100%" fill="#000000" rx="10" ry="10"/>
+        <rect width="100%" height="100%" fill="#151515" rx="10" ry="10"/>
         
         ${projects.map((project, i) => {
           const xPos = i * projectWidth;
@@ -61,7 +61,7 @@ app.get("/badge.svg", async (req, res) => {
     res.send(`
       <svg width="800" height="100" viewBox="0 0 800 100" xmlns="http://www.w3.org/2000/svg">
         <style>
-          rect { fill: #000000 !important; }
+          rect { fill: #151515 !important; }
           .text { fill: #ffffff; font-family: monospace; font-size: 16px; }
         </style>
         <rect width="100%" height="100%" rx="10" ry="10"/>
