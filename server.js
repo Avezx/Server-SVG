@@ -20,12 +20,13 @@ app.get("/badge.svg", async (req, res) => {
       name: repo.name,
       description: repo.description || "Brak opisu",
       stars: repo.stargazers_count,
-      url: repo.html_url
+      url: repo.html_url,
+      language: repo.language || "Unknown"
     }));
 
     const svgWidth = 800;
     const projectWidth = svgWidth / 3;
-    const svgHeight = 80 + (projects.length * 20);
+    const svgHeight = 100 + (projects.length * 10); // Increased height to accommodate language
 
     res.setHeader("Content-Type", "image/svg+xml");
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -38,6 +39,13 @@ app.get("/badge.svg", async (req, res) => {
           .project { fill: #58a6ff; font-family: monospace; font-size: 18px; font-weight: bold; }
           .description { fill: #8b949e; font-family: monospace; font-size: 14px; }
           .stars { fill: #f1e05a; font-family: monospace; font-size: 14px; }
+          .JavaScript { fill: #f1e05a; }
+          .Python { fill: #3572A5; }
+          .TypeScript { fill: #2b7489; }
+          .Java { fill: #b07219; }
+          .CSS { fill: #563d7c; }
+          .HTML { fill: #e34c26; }
+          .Unknown { fill: #8b949e; }
         </style>
         <rect width="100%" height="100%" fill="#151515" rx="10" ry="10"/>
         
@@ -47,7 +55,8 @@ app.get("/badge.svg", async (req, res) => {
             <g transform="translate(${xPos}, 0)">
               <text x="70" y="40" class="project">${project.name}</text>
               <text x="70" y="60" class="description">${project.description}</text>
-              <text x="65" y="80" class="stars">⭐ ${project.stars} gwiazdek</text>
+              <text x="70" y="80" class="stars">⭐ ${project.stars} gwiazdek</text>
+              <text x="70" y="100" class="${project.language}">${project.language}</text>
             </g>
           `
         }).join('')}
