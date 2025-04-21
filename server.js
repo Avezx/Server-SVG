@@ -25,7 +25,7 @@ app.get("/badge.svg", async (req, res) => {
 
     const svgWidth = 800;
     const projectWidth = svgWidth / 3;
-    const svgHeight = 80 + (projects.length * 30);
+    const svgHeight = 80 + (projects.length * 20);
 
     res.setHeader("Content-Type", "image/svg+xml");
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -45,9 +45,9 @@ app.get("/badge.svg", async (req, res) => {
           const xPos = i * projectWidth;
           return `
             <g transform="translate(${xPos}, 0)">
-              <text x="20" y="40" class="project">${project.name}</text>
-              <text x="20" y="70" class="description">${project.description}</text>
-              <text x="20" y="100" class="stars">⭐ ${project.stars} gwiazdek</text>
+              <text x="50" y="40" class="project">${project.name}</text>
+              <text x="50" y="70" class="description">${project.description}</text>
+              <text x="50" y="100" class="stars">⭐ ${project.stars} gwiazdek</text>
             </g>
           `;
         }).join('')}
