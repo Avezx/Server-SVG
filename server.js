@@ -47,7 +47,7 @@ app.get("/badge.svg", async (req, res) => {
             <g transform="translate(${xPos}, 0)">
               <text x="70" y="40" class="project">${project.name}</text>
               <text x="70" y="60" class="description">${project.description}</text>
-              <text x="70" y="80" class="stars">⭐ ${project.stars} gwiazdek</text>
+              <text x="65" y="80" class="stars">⭐ ${project.stars} gwiazdek</text>
             </g>
           `
         }).join('')}
