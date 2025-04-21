@@ -45,9 +45,9 @@ app.get("/badge.svg", async (req, res) => {
           const xPos = i * projectWidth;
           return `
             <g transform="translate(${xPos}, 0)">
-              <text x="76" y="40" class="project">${project.name}</text>
-              <text x="76" y="70" class="description">${project.description}</text>
-              <text x="76" y="100" class="stars">⭐ ${project.stars} gwiazdek</text>
+              <text x="70" y="40" class="project">${project.name}</text>
+              <text x="70" y="55" class="description">${project.description}</text>
+              <text x="70" y="90" class="stars">⭐ ${project.stars} gwiazdek</text>
             </g>
           `
         }).join('')}
