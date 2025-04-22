@@ -18,7 +18,7 @@ const getLanguageAbbreviation = (language) => {
     'Ruby': 'RB',
     'Go': 'GO'
   };
-  return abbreviations[language] || language || 'Unknown';
+  return abbreviations[language] || language || '';
 };
 
 const getTextColor = (bgColor) => {
@@ -84,7 +84,7 @@ app.get("/badge.svg", async (req, res) => {
             'PHP': '#4F5D95',
             'Ruby': '#701516',
             'Go': '#00ADD8',
-            'Unknown': '#8b949e'
+            'Unknown': 'rgba(0,0,0,.8)'
           };
           const bgColor = langColors[project.language] || langColors['Unknown'];
           const textColor = getTextColor(bgColor);
