@@ -112,6 +112,9 @@ app.get("/badge.svg", async (req, res) => {
               </text>
               <rect x="70" y="110" width="40" height="20" rx="6" ry="6" fill="${bgColor}" filter="url(#shadow)"/>
               <text x="90" y="124" class="lang-tag" fill="${textColor}" text-anchor="middle">${langAbbr}</text>
+
+              <rect x="120" y="110" width="40" height="20" rx="6" ry="6" fill="${bgColor}" filter="url(#shadow)"/>
+              <text x="130" y="124" class="lang-tag" fill="yellow" text-anchor="middle">⭐ ${project.stars}</text>
             </g>
           `
         }).join('')}
