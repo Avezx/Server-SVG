@@ -9,6 +9,7 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
 const getLanguageAbbreviation = (language) => {
   const abbreviations = {
+    // Programming Languages
     'JavaScript': 'JS',
     'TypeScript': 'TS',
     'Python': 'PY',
@@ -17,9 +18,29 @@ const getLanguageAbbreviation = (language) => {
     'CSS': 'CSS',
     'PHP': 'PHP',
     'Ruby': 'RB',
-    'Go': 'GO'
+    'Go': 'GO',
+    'C++': 'C++',
+    'C#': 'C#',
+    'Rust': 'RS',
+    'Swift': 'SWIFT',
+    'Kotlin': 'KT',
+    'Dart': 'DART',
+    'R': 'R',
+    'Scala': 'SCALA',
+    'Shell': 'SH',
+    'PowerShell': 'PS',
+    // File Types
+    'Markdown': 'MD',
+    'Text': 'TXT',
+    'JSON': 'JSON',
+    'YAML': 'YML',
+    'XML': 'XML',
+    'CSV': 'CSV',
+    'SQL': 'SQL',
+    'Docker': 'DOCKER',
+    'Jupyter Notebook': 'IPYNB'
   };
-  return abbreviations[language] || language || '';
+  return abbreviations[language] || language || 'Unknown';
 };
 
 const getTextColor = (bgColor) => {
@@ -50,20 +71,26 @@ app.get("/badge.svg", async (req, res) => {
     // Fetch progress for each repo
     const projectsPromises = repos.map(async repo => {
       let progress = 0;
-      try {
-        const progressUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${repo.name}/contents/progress.json`;
-        const progressResponse = await axios.get(progressUrl, {
-          headers: {
-            Authorization: `token ${GITHUB_TOKEN}`,
-            Accept: "application/vnd.github.v3.raw"
+      
+      // Check if repo is avezx or avez
+      if (repo.name === 'avezx' || repo.name === 'avez') {
+        progress = 99.99;
+      } else {
+        try {
+          const progressUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${repo.name}/contents/progress.json`;
+          const progressResponse = await axios.get(progressUrl, {
+            headers: {
+              Authorization: `token ${GITHUB_TOKEN}`,
+              Accept: "application/vnd.github.v3.raw"
+            }
+          });
+          
+          if (progressResponse.data && progressResponse.data.progress) {
+            progress = progressResponse.data.progress;
           }
-        });
-        
-        if (progressResponse.data && progressResponse.data.progress) {
-          progress = progressResponse.data.progress;
+        } catch (err) {
+          console.error(`No progress.json found for ${repo.name}`);
         }
-      } catch (err) {
-        console.error(`No progress.json found for ${repo.name}`);
       }
 
       return {
@@ -71,7 +98,7 @@ app.get("/badge.svg", async (req, res) => {
         description: repo.description || "Brak opisu",
         stars: repo.stargazers_count,
         url: repo.html_url,
-        language: repo.language || "",
+        language: ['avezx', 'avez'].includes(repo.name) ? 'Markdown' : (repo.language || "NULL"),
         forks: repo.forks_count,
         watchers: repo.watchers_count,
         issues: repo.open_issues_count,
@@ -102,7 +129,7 @@ app.get("/badge.svg", async (req, res) => {
           .project { fill: #58a6ff; font-family: monospace; font-size: 18px; font-weight: bold; }
           .description { fill: #ffffff; font-family: monospace; font-size: 14px; }
           .stats { fill: #ffffff; font-family: monospace; font-size: 14px; }
-          .details { fill: #ffffff; font-family: monospace; font-size: 14px; }
+          .details { fill: #ffffff; font-family: monospace; font-size: 12px; }
           .lang-tag { font-family: monospace; font-size: 12px; font-weight: bold; }
         </style>
         <defs>
@@ -115,16 +142,37 @@ app.get("/badge.svg", async (req, res) => {
         ${projects.map((project, i) => {
           const xPos = i * projectWidth;
           const langColors = {
+            // Programming Languages
             'JavaScript': '#f1e05a',
-            'Python': '#3572A5',
             'TypeScript': '#2b7489',
+            'Python': '#3572A5',
             'Java': '#b07219',
-            'CSS': '#563d7c',
             'HTML': '#e34c26',
+            'CSS': '#563d7c',
             'PHP': '#4F5D95',
             'Ruby': '#701516',
             'Go': '#00ADD8',
-            'Unknown': '#151515'
+            'C++': '#f34b7d',
+            'C#': '#178600',
+            'Rust': '#dea584',
+            'Swift': '#ffac45',
+            'Kotlin': '#A97BFF',
+            'Dart': '#00B4AB',
+            'R': '#198CE7',
+            'Scala': '#c22d40',
+            'Shell': '#89e051',
+            'PowerShell': '#012456',
+            // File Types
+            'Markdown': '#083fa1',
+            'Text': '#4f4f4f',
+            'JSON': '#292929',
+            'YAML': '#cb171e',
+            'XML': '#0060ac',
+            'CSV': '#237346',
+            'SQL': '#e38c00',
+            'Docker': '#384d54',
+            'Jupyter Notebook': '#DA5B0B',
+            'Unknown': '#8b949e'
           };
           const bgColor = langColors[project.language] || langColors['Unknown'];
           const textColor = getTextColor(bgColor);
