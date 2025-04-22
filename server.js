@@ -59,7 +59,7 @@ app.get("/badge.svg", async (req, res) => {
 
     const svgWidth = 800;
     const projectWidth = svgWidth / 3;
-    const svgHeight = 100 + (projects.length * 10); // Increased height to accommodate language
+    const svgHeight = 100 + (projects.length * 20); // Increased height to accommodate language
 
     res.setHeader("Content-Type", "image/svg+xml");
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -113,11 +113,14 @@ app.get("/badge.svg", async (req, res) => {
               <rect x="70" y="110" width="40" height="20" rx="6" ry="6" fill="${bgColor}" filter="url(#shadow)"/>
               <text x="90" y="124" class="lang-tag" fill="${textColor}" text-anchor="middle">${langAbbr}</text>
 
-              <rect x="120" y="110" width="40" height="20" rx="6" ry="6" fill="#0b0b0b" filter="url(#shadow)"/>
+              <rect x="120" y="110" width="40" height="20" rx="6" ry="6" fill="#000000" filter="url(#shadow)"/>
               <text x="140" y="124" class="lang-tag" fill="white" text-anchor="middle">⭐ ${project.stars}</text>
 
-              <rect x="170" y="110" width="40" height="20" rx="6" ry="6" fill="#0b0b0b" filter="url(#shadow)"/>
+              <rect x="170" y="110" width="40" height="20" rx="6" ry="6" fill="#000000" filter="url(#shadow)"/>
               <text x="190" y="124" class="lang-tag" fill="white" text-anchor="middle">👀 ${project.watchers}</text>
+
+              <rect x="70" y="140" width="100" height="20" rx="6" ry="6" fill="${bgColor}" filter="url(#shadow)"/>
+
             </g>
           `
         }).join('')}
