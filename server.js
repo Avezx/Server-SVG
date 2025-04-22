@@ -40,22 +40,45 @@ app.get("/badge.svg", async (req, res) => {
 
     const repos = response.data.slice(0, 3);
 
-    const projects = repos.map(repo => ({
-      name: repo.name,
-      description: repo.description || "Brak opisu",
-      stars: repo.stargazers_count,
-      url: repo.html_url,
-      language: repo.language || "",
-      forks: repo.forks_count,
-      watchers: repo.watchers_count,
-      issues: repo.open_issues_count,
-      updated: new Date(repo.updated_at).toLocaleDateString(),
-      created: new Date(repo.created_at).toLocaleDateString(),
-      size: `${(repo.size/1024).toFixed(2)} MB`,
-      license: repo.license ? repo.license.name : "Brak licencji",
-      isPrivate: repo.private,
-      isFork: repo.fork
-    }));
+    // Fetch progress for each repo
+    const projectsPromises = repos.map(async repo => {
+      let progress = 0;
+      try {
+        const progressUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${repo.name}/contents/progress.json`;
+        const progressResponse = await axios.get(progressUrl, {
+          headers: {
+            Authorization: `token ${GITHUB_TOKEN}`,
+            Accept: "application/vnd.github.v3.raw"
+          }
+        });
+        
+        if (progressResponse.data && progressResponse.data.progress) {
+          progress = progressResponse.data.progress;
+        }
+      } catch (err) {
+        console.error(`No progress.json found for ${repo.name}`);
+      }
+
+      return {
+        name: repo.name,
+        description: repo.description || "Brak opisu",
+        stars: repo.stargazers_count,
+        url: repo.html_url,
+        language: repo.language || "",
+        forks: repo.forks_count,
+        watchers: repo.watchers_count,
+        issues: repo.open_issues_count,
+        updated: new Date(repo.updated_at).toLocaleDateString(),
+        created: new Date(repo.created_at).toLocaleDateString(),
+        size: `${(repo.size/1024).toFixed(2)} MB`,
+        license: repo.license ? repo.license.name : "Brak licencji",
+        isPrivate: repo.private,
+        isFork: repo.fork,
+        progress: progress
+      };
+    });
+
+    const projects = await Promise.all(projectsPromises);
 
     const svgWidth = 800;
     const projectWidth = svgWidth / 3;
@@ -99,6 +122,7 @@ app.get("/badge.svg", async (req, res) => {
           const bgColor = langColors[project.language] || langColors['Unknown'];
           const textColor = getTextColor(bgColor);
           const langAbbr = getLanguageAbbreviation(project.language);
+          const progressWidth = (project.progress / 100) * 140; // 140px is total width
           
           return `
             <g transform="translate(${xPos}, 0)">
@@ -114,8 +138,10 @@ app.get("/badge.svg", async (req, res) => {
               <rect x="170" y="70" width="40" height="20" rx="6" ry="6" fill="#000000" filter="url(#shadow)"/>
               <text x="190" y="84" class="lang-tag" fill="white" text-anchor="middle">👀 ${project.watchers}</text>
 
-              <rect x="70" y="100" width="140" height="20" rx="6" ry="6" fill="#58a6ff" filter="url(#shadow)"/>
-              <text x="140" y="114" class="lang-tag" fill="white" text-anchor="middle">🔗 <a href="${project.url}" style="fill: white; text-decoration: none;">Zobacz Projekt</a></text>
+              <rect x="70" y="100" width="${progressWidth}" height="5" rx="2" ry="2" fill="#58a6ff" filter="url(#shadow)"/>
+
+              <rect x="70" y="110" width="140" height="20" rx="6" ry="6" fill="#58a6ff" filter="url(#shadow)"/>
+              <text x="140" y="124" class="lang-tag" fill="white" text-anchor="middle">🔗 <a href="${project.url}" style="fill: white; text-decoration: none;">Zobacz Projekt</a></text>
 
             </g>
           `
