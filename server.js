@@ -45,7 +45,7 @@ app.get("/badge.svg", async (req, res) => {
       description: repo.description || "Brak opisu",
       stars: repo.stargazers_count,
       url: repo.html_url,
-      language: repo.language || "Unknown"
+      language: repo.language || ""
     }));
 
     const svgWidth = 800;
