@@ -139,10 +139,10 @@ app.get("/badge.svg", async (req, res) => {
               <rect x="170" y="70" width="40" height="20" rx="6" ry="6" fill="#000000" filter="url(#shadow)"/>
               <text x="190" y="84" class="lang-tag" fill="white" text-anchor="middle">👀 ${project.watchers}</text>
 
+              <rect x="70" y="100" width="140" height="5" rx="2" ry="2" fill="gray" filter="url(#shadow)"/>
               <rect x="70" y="100" width="${progressWidth}" height="5" rx="2" ry="2" fill="#58a6ff" filter="url(#shadow)"/>
-
-              <rect x="70" y="110" width="140" height="20" rx="6" ry="6" fill="#58a6ff" filter="url(#shadow)"/>
-              <text x="140" y="124" class="lang-tag" fill="white" text-anchor="middle">🔗 <a href="${project.url}" style="fill: white; text-decoration: none;">Zobacz Projekt</a></text>
+              
+              <text x="70" y="120" class="details">Postęp: ${project.progress}%</text>
 
             </g>
           `
