@@ -94,7 +94,7 @@ app.get("/badge.svg", async (req, res) => {
             'PHP': '#4F5D95',
             'Ruby': '#701516',
             'Go': '#00ADD8',
-            'Unknown': 'rgba(0,0,0,.8)'
+            'Unknown': '#151515'
           };
           const bgColor = langColors[project.language] || langColors['Unknown'];
           const textColor = getTextColor(bgColor);
@@ -113,10 +113,10 @@ app.get("/badge.svg", async (req, res) => {
               <rect x="70" y="110" width="40" height="20" rx="6" ry="6" fill="${bgColor}" filter="url(#shadow)"/>
               <text x="90" y="124" class="lang-tag" fill="${textColor}" text-anchor="middle">${langAbbr}</text>
 
-              <rect x="120" y="110" width="40" height="20" rx="6" ry="6" fill="#111111" filter="url(#shadow)"/>
+              <rect x="120" y="110" width="40" height="20" rx="6" ry="6" fill="#0b0b0b" filter="url(#shadow)"/>
               <text x="140" y="124" class="lang-tag" fill="white" text-anchor="middle">⭐ ${project.stars}</text>
 
-              <rect x="170" y="110" width="40" height="20" rx="6" ry="6" fill="#111111" filter="url(#shadow)"/>
+              <rect x="170" y="110" width="40" height="20" rx="6" ry="6" fill="#0b0b0b" filter="url(#shadow)"/>
               <text x="190" y="124" class="lang-tag" fill="white" text-anchor="middle">👀 ${project.watchers}</text>
             </g>
           `
