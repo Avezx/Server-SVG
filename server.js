@@ -9,7 +9,7 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
 const getLanguageAbbreviation = (language) => {
   const abbreviations = {
-    // Programming Languages
+  
     'JavaScript': 'JS',
     'TypeScript': 'TS',
     'Python': 'PY',
@@ -29,7 +29,7 @@ const getLanguageAbbreviation = (language) => {
     'Scala': 'SCALA',
     'Shell': 'SH',
     'PowerShell': 'PS',
-    // File Types
+
     'Markdown': 'MD',
     'Text': 'TXT',
     'JSON': 'JSON',
@@ -44,7 +44,7 @@ const getLanguageAbbreviation = (language) => {
 };
 
 const getTextColor = (bgColor) => {
-  // Convert hex to RGB and determine if text should be black or white
+
   const hex = bgColor.replace('#', '');
   const r = parseInt(hex.substr(0, 2), 16);
   const g = parseInt(hex.substr(2, 2), 16);
@@ -53,9 +53,9 @@ const getTextColor = (bgColor) => {
 };
 
 const getProgressColor = (progress) => {
-  if (progress < 30) return '#ff4545';  // Red for low progress
-  if (progress < 70) return '#ffd644';  // Yellow for medium progress
-  return '#44ff88';                     // Green for high progress
+  if (progress < 30) return '#ff4545';  
+  if (progress < 70) return '#ffd644'; 
+  return '#44ff88';                   
 };
 
 const getStatusColor = (status) => {
@@ -77,12 +77,11 @@ app.get("/badge.svg", async (req, res) => {
 
     const repos = response.data.slice(0, 3);
 
-    // Fetch progress for each repo
     const projectsPromises = repos.map(async repo => {
       let progress = 0;
       let status = 'in production';
       
-      // Check if repo is avezx or avez
+
       if (repo.name === 'avezx' || repo.name === 'avez') {
         progress = 99.99;
         status = 'done';
@@ -131,7 +130,7 @@ app.get("/badge.svg", async (req, res) => {
 
     const svgWidth = 800;
     const projectWidth = svgWidth / 3;
-    const svgHeight = 100 + (projects.length * 20); // Increased height to accommodate language
+    const svgHeight = 100 + (projects.length * 20); 
 
     res.setHeader("Content-Type", "image/svg+xml");
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -157,7 +156,7 @@ app.get("/badge.svg", async (req, res) => {
         ${projects.map((project, i) => {
           const xPos = i * projectWidth;
           const langColors = {
-            // Programming Languages
+         
             'JavaScript': '#f1e05a',
             'TypeScript': '#2b7489',
             'Python': '#3572A5',
@@ -177,7 +176,7 @@ app.get("/badge.svg", async (req, res) => {
             'Scala': '#c22d40',
             'Shell': '#89e051',
             'PowerShell': '#012456',
-            // File Types
+       
             'Markdown': '#083fa1',
             'Text': '#4f4f4f',
             'JSON': '#292929',
@@ -197,25 +196,25 @@ app.get("/badge.svg", async (req, res) => {
           
           return `
             <g transform="translate(${xPos}, 0)">
-              <text x="70" y="40" class="project">${project.name}</text>
-              <text x="70" y="60" class="description">${project.description}</text>
+              <text x="70" y="30" class="project">${project.name}</text>
+              <text x="70" y="50" class="description">${project.description}</text>
 
-              <rect x="70" y="70" width="40" height="20" rx="6" ry="6" fill="${bgColor}" filter="url(#shadow)"/>
-              <text x="90" y="84" class="lang-tag" fill="${textColor}" text-anchor="middle">${langAbbr}</text>
+              <rect x="70" y="60" width="40" height="20" rx="6" ry="6" fill="${bgColor}" filter="url(#shadow)"/>
+              <text x="90" y="74" class="lang-tag" fill="${textColor}" text-anchor="middle">${langAbbr}</text>
 
-              <rect x="120" y="70" width="40" height="20" rx="6" ry="6" fill="#000000" filter="url(#shadow)"/>
-              <text x="140" y="84" class="lang-tag" fill="white" text-anchor="middle">⭐ ${project.stars}</text>
+              <rect x="120" y="60" width="40" height="20" rx="6" ry="6" fill="#000000" filter="url(#shadow)"/>
+              <text x="140" y="74" class="lang-tag" fill="white" text-anchor="middle">⭐ ${project.stars}</text>
 
-              <rect x="170" y="70" width="40" height="20" rx="6" ry="6" fill="#000000" filter="url(#shadow)"/>
-              <text x="190" y="84" class="lang-tag" fill="white" text-anchor="middle">👀 ${project.watchers}</text>
+              <rect x="170" y="60" width="40" height="20" rx="6" ry="6" fill="#000000" filter="url(#shadow)"/>
+              <text x="190" y="74" class="lang-tag" fill="white" text-anchor="middle">👀 ${project.watchers}</text>
 
-              <rect x="220" y="70" width="80" height="20" rx="6" ry="6" fill="${getStatusColor(project.status)}" filter="url(#shadow)"/>
-              <text x="260" y="84" class="lang-tag" fill="${getTextColor(getStatusColor(project.status))}" text-anchor="middle">${project.status}</text>
+              <rect x="70" y="90" width="140" height="20" rx="6" ry="6" fill="${getStatusColor(project.status)}" filter="url(#shadow)"/>
+              <text x="140" y="104" class="lang-tag" fill="${getTextColor(getStatusColor(project.status))}" text-anchor="middle">${project.status}</text>
 
-              <rect x="70" y="100" width="140" height="5" rx="2" ry="2" fill="gray" filter="url(#shadow)"/>
-              <rect x="70" y="100" width="${progressWidth}" height="5" rx="2" ry="2" fill="${progressColor}" filter="url(#shadow)"/>
+              <rect x="70" y="120" width="140" height="5" rx="2" ry="2" fill="gray" filter="url(#shadow)"/>
+              <rect x="70" y="120" width="${progressWidth}" height="5" rx="2" ry="2" fill="${progressColor}" filter="url(#shadow)"/>
               
-              <text x="70" y="120" class="details">Postęp: ${project.progress}%</text>
+              <text x="70" y="140" class="details">Postęp: ${project.progress}%</text>
 
             </g>
           `
