@@ -45,7 +45,16 @@ app.get("/badge.svg", async (req, res) => {
       description: repo.description || "Brak opisu",
       stars: repo.stargazers_count,
       url: repo.html_url,
-      language: repo.language || ""
+      language: repo.language || "",
+      forks: repo.forks_count,
+      watchers: repo.watchers_count,
+      issues: repo.open_issues_count,
+      updated: new Date(repo.updated_at).toLocaleDateString(),
+      created: new Date(repo.created_at).toLocaleDateString(),
+      size: `${(repo.size/1024).toFixed(2)} MB`,
+      license: repo.license ? repo.license.name : "Brak licencji",
+      isPrivate: repo.private,
+      isFork: repo.fork
     }));
 
     const svgWidth = 800;
@@ -94,9 +103,14 @@ app.get("/badge.svg", async (req, res) => {
             <g transform="translate(${xPos}, 0)">
               <text x="70" y="40" class="project">${project.name}</text>
               <text x="70" y="60" class="description">${project.description}</text>
-              <text x="70" y="80" class="stars">⭐ ${project.stars} gwiazdek</text>
-              <rect x="70" y="90" width="40" height="20" rx="6" ry="6" fill="${bgColor}" filter="url(#shadow)"/>
-              <text x="90" y="104" class="lang-tag" fill="${textColor}" text-anchor="middle">${langAbbr}</text>
+              <text x="70" y="80" class="stats">
+                ⭐ ${project.stars} | 🍴 ${project.forks} | 👀 ${project.watchers} | ⚠️ ${project.issues}
+              </text>
+              <text x="70" y="100" class="details">
+                📅 ${project.created} | 📦 ${project.size}
+              </text>
+              <rect x="70" y="110" width="40" height="20" rx="6" ry="6" fill="${bgColor}" filter="url(#shadow)"/>
+              <text x="90" y="124" class="lang-tag" fill="${textColor}" text-anchor="middle">${langAbbr}</text>
             </g>
           `
         }).join('')}
