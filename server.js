@@ -58,6 +58,15 @@ const getProgressColor = (progress) => {
   return '#44ff88';                     // Green for high progress
 };
 
+const getStatusColor = (status) => {
+  const colors = {
+    'done': '#44ff88',
+    'in production': '#ffd644',
+    'closed': '#ff4545'
+  };
+  return colors[status.toLowerCase()] || '#8b949e';
+};
+
 app.get("/badge.svg", async (req, res) => {
   try {
     const response = await axios.get(GITHUB_API_URL, {
@@ -71,10 +80,12 @@ app.get("/badge.svg", async (req, res) => {
     // Fetch progress for each repo
     const projectsPromises = repos.map(async repo => {
       let progress = 0;
+      let status = 'in production';
       
       // Check if repo is avezx or avez
       if (repo.name === 'avezx' || repo.name === 'avez') {
         progress = 99.99;
+        status = 'done';
       } else {
         try {
           const progressUrl = `https://api.github.com/repos/${GITHUB_USERNAME}/${repo.name}/contents/progress.json`;
@@ -85,8 +96,9 @@ app.get("/badge.svg", async (req, res) => {
             }
           });
           
-          if (progressResponse.data && progressResponse.data.progress) {
-            progress = progressResponse.data.progress;
+          if (progressResponse.data) {
+            progress = progressResponse.data.progress || 0;
+            status = progressResponse.data.status || 'in production';
           }
         } catch (err) {
           console.error(`No progress.json found for ${repo.name}`);
@@ -95,7 +107,9 @@ app.get("/badge.svg", async (req, res) => {
 
       return {
         name: repo.name,
-        description: repo.description || "Brak opisu",
+        description: (repo.description || "Brak opisu").length > 20 
+          ? (repo.description || "Brak opisu").substring(0, 20) + "..." 
+          : (repo.description || "Brak opisu"),
         stars: repo.stargazers_count,
         url: repo.html_url,
         language: ['avezx', 'avez'].includes(repo.name) ? 'Markdown' : (repo.language || "NULL"),
@@ -108,6 +122,7 @@ app.get("/badge.svg", async (req, res) => {
         license: repo.license ? repo.license.name : "Brak licencji",
         isPrivate: repo.private,
         isFork: repo.fork,
+        status: status,
         progress: progress
       };
     });
@@ -193,6 +208,9 @@ app.get("/badge.svg", async (req, res) => {
 
               <rect x="170" y="70" width="40" height="20" rx="6" ry="6" fill="#000000" filter="url(#shadow)"/>
               <text x="190" y="84" class="lang-tag" fill="white" text-anchor="middle">👀 ${project.watchers}</text>
+
+              <rect x="220" y="70" width="80" height="20" rx="6" ry="6" fill="${getStatusColor(project.status)}" filter="url(#shadow)"/>
+              <text x="260" y="84" class="lang-tag" fill="${getTextColor(getStatusColor(project.status))}" text-anchor="middle">${project.status}</text>
 
               <rect x="70" y="100" width="140" height="5" rx="2" ry="2" fill="gray" filter="url(#shadow)"/>
               <rect x="70" y="100" width="${progressWidth}" height="5" rx="2" ry="2" fill="${progressColor}" filter="url(#shadow)"/>
