@@ -31,6 +31,12 @@ const getTextColor = (bgColor) => {
   return (r * 0.299 + g * 0.587 + b * 0.114) > 186 ? '#000000' : '#ffffff';
 };
 
+const getProgressColor = (progress) => {
+  if (progress < 30) return '#ff4545';  // Red for low progress
+  if (progress < 70) return '#ffd644';  // Yellow for medium progress
+  return '#44ff88';                     // Green for high progress
+};
+
 app.get("/badge.svg", async (req, res) => {
   try {
     const response = await axios.get(GITHUB_API_URL, {
@@ -124,6 +130,7 @@ app.get("/badge.svg", async (req, res) => {
           const textColor = getTextColor(bgColor);
           const langAbbr = getLanguageAbbreviation(project.language);
           const progressWidth = (project.progress / 100) * 140; // 140px is total width
+          const progressColor = getProgressColor(project.progress);
           
           return `
             <g transform="translate(${xPos}, 0)">
@@ -140,7 +147,7 @@ app.get("/badge.svg", async (req, res) => {
               <text x="190" y="84" class="lang-tag" fill="white" text-anchor="middle">👀 ${project.watchers}</text>
 
               <rect x="70" y="100" width="140" height="5" rx="2" ry="2" fill="gray" filter="url(#shadow)"/>
-              <rect x="70" y="100" width="${progressWidth}" height="5" rx="2" ry="2" fill="#58a6ff" filter="url(#shadow)"/>
+              <rect x="70" y="100" width="${progressWidth}" height="5" rx="2" ry="2" fill="${progressColor}" filter="url(#shadow)"/>
               
               <text x="70" y="120" class="details">Postęp: ${project.progress}%</text>
 
