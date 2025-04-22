@@ -104,23 +104,18 @@ app.get("/badge.svg", async (req, res) => {
             <g transform="translate(${xPos}, 0)">
               <text x="70" y="40" class="project">${project.name}</text>
               <text x="70" y="60" class="description">${project.description}</text>
-              <text x="70" y="80" class="stats">
-                ⭐ ${project.stars} | 🍴 ${project.forks} | 👀 ${project.watchers} | ⚠️ ${project.issues}
-              </text>
-              <text x="70" y="100" class="details">
-                📅 ${project.created} | 📦 ${project.size}
-              </text>
-              <rect x="70" y="110" width="40" height="20" rx="6" ry="6" fill="${bgColor}" filter="url(#shadow)"/>
-              <text x="90" y="124" class="lang-tag" fill="${textColor}" text-anchor="middle">${langAbbr}</text>
 
-              <rect x="120" y="110" width="40" height="20" rx="6" ry="6" fill="#000000" filter="url(#shadow)"/>
-              <text x="140" y="124" class="lang-tag" fill="white" text-anchor="middle">⭐ ${project.stars}</text>
+              <rect x="70" y="80" width="40" height="20" rx="6" ry="6" fill="${bgColor}" filter="url(#shadow)"/>
+              <text x="90" y="94" class="lang-tag" fill="${textColor}" text-anchor="middle">${langAbbr}</text>
 
-              <rect x="170" y="110" width="40" height="20" rx="6" ry="6" fill="#000000" filter="url(#shadow)"/>
-              <text x="190" y="124" class="lang-tag" fill="white" text-anchor="middle">👀 ${project.watchers}</text>
+              <rect x="120" y="80" width="40" height="20" rx="6" ry="6" fill="#000000" filter="url(#shadow)"/>
+              <text x="140" y="94" class="lang-tag" fill="white" text-anchor="middle">⭐ ${project.stars}</text>
 
-              <rect x="70" y="140" width="140" height="20" rx="6" ry="6" fill="#58a6ff" filter="url(#shadow)"/>
-              <text x="140" y="154" class="lang-tag" fill="white" text-anchor="middle">🔗 <a href="${project.url}" style="fill: ${textColor}; text-decoration: none;">Zobacz Projekt</a></text>
+              <rect x="170" y="80" width="40" height="20" rx="6" ry="6" fill="#000000" filter="url(#shadow)"/>
+              <text x="190" y="94" class="lang-tag" fill="white" text-anchor="middle">👀 ${project.watchers}</text>
+
+              <rect x="70" y="110" width="140" height="20" rx="6" ry="6" fill="#58a6ff" filter="url(#shadow)"/>
+              <text x="140" y="124" class="lang-tag" fill="white" text-anchor="middle">🔗 <a href="${project.url}" style="fill: white; text-decoration: none;">Zobacz Projekt</a></text>
 
             </g>
           `
