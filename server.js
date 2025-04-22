@@ -119,7 +119,8 @@ app.get("/badge.svg", async (req, res) => {
               <rect x="170" y="110" width="40" height="20" rx="6" ry="6" fill="#000000" filter="url(#shadow)"/>
               <text x="190" y="124" class="lang-tag" fill="white" text-anchor="middle">👀 ${project.watchers}</text>
 
-              <rect x="70" y="140" width="150" height="20" rx="6" ry="6" fill="${bgColor}" filter="url(#shadow)"/>
+              <rect x="70" y="140" width="130" height="20" rx="6" ry="6" fill="${bgColor}" filter="url(#shadow)"/>
+              <text x="140" y="154" class="lang-tag" fill="${textColor}" text-anchor="middle">🔗 <a href="${project.url}" style="fill: ${textColor}; text-decoration: none;">${project.url}</a></text>
 
             </g>
           `
