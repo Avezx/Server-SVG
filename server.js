@@ -105,17 +105,17 @@ app.get("/badge.svg", async (req, res) => {
               <text x="70" y="40" class="project">${project.name}</text>
               <text x="70" y="60" class="description">${project.description}</text>
 
-              <rect x="70" y="80" width="40" height="20" rx="6" ry="6" fill="${bgColor}" filter="url(#shadow)"/>
-              <text x="90" y="94" class="lang-tag" fill="${textColor}" text-anchor="middle">${langAbbr}</text>
+              <rect x="70" y="70" width="40" height="20" rx="6" ry="6" fill="${bgColor}" filter="url(#shadow)"/>
+              <text x="90" y="84" class="lang-tag" fill="${textColor}" text-anchor="middle">${langAbbr}</text>
 
-              <rect x="120" y="80" width="40" height="20" rx="6" ry="6" fill="#000000" filter="url(#shadow)"/>
-              <text x="140" y="94" class="lang-tag" fill="white" text-anchor="middle">⭐ ${project.stars}</text>
+              <rect x="120" y="70" width="40" height="20" rx="6" ry="6" fill="#000000" filter="url(#shadow)"/>
+              <text x="140" y="84" class="lang-tag" fill="white" text-anchor="middle">⭐ ${project.stars}</text>
 
-              <rect x="170" y="80" width="40" height="20" rx="6" ry="6" fill="#000000" filter="url(#shadow)"/>
-              <text x="190" y="94" class="lang-tag" fill="white" text-anchor="middle">👀 ${project.watchers}</text>
+              <rect x="170" y="70" width="40" height="20" rx="6" ry="6" fill="#000000" filter="url(#shadow)"/>
+              <text x="190" y="84" class="lang-tag" fill="white" text-anchor="middle">👀 ${project.watchers}</text>
 
-              <rect x="70" y="110" width="140" height="20" rx="6" ry="6" fill="#58a6ff" filter="url(#shadow)"/>
-              <text x="140" y="124" class="lang-tag" fill="white" text-anchor="middle">🔗 <a href="${project.url}" style="fill: white; text-decoration: none;">Zobacz Projekt</a></text>
+              <rect x="70" y="100" width="140" height="20" rx="6" ry="6" fill="#58a6ff" filter="url(#shadow)"/>
+              <text x="140" y="114" class="lang-tag" fill="white" text-anchor="middle">🔗 <a href="${project.url}" style="fill: white; text-decoration: none;">Zobacz Projekt</a></text>
 
             </g>
           `
